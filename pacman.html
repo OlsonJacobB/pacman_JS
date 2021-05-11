@@ -414,6 +414,25 @@
       var clyde  = new Ghost(['clyden.png', 'clydes.png', 'clydew.png', 'clydee.png'], [17, 15]);
       var ghosts = [blinky, inky, pinky, clyde];
 
+      class weatherIcon {
+        constructor(graphics, pos) {
+          this._img = new Image(48, 48);
+          this._graphics = graphics;
+          this._img.src = this._graphics[0];
+          this._pos = pos;
+        }
+        draw() {
+          let x = 240;
+          let y = 180;
+          let BG = new Image;
+          BG.src = 'weather_bg.png';
+          ctx.drawImage(BG, this._pos[0] * 24 + x, this._pos[1] * 24 + y);
+          ctx.drawImage(this._img, this._pos[0] * 24 + x, this._pos[1] * 24 + y);
+        }
+      }
+
+      var testWeather = new weatherIcon(['cloudy.png', 'sunny.png', 'partly_cloudy.png', 'rainy.png', 'lightning.png'], [0, 0]);
+
       var frames = 0;
       var frameGap = 18;
 
@@ -429,7 +448,7 @@
       }
 
       function initGame() {
-        player.draw();
+        player.draw(); // Effectively a dummy function in case I want to put something here later.
       }
 
       function handleKeyPress(event) {
@@ -481,6 +500,8 @@
         if (clear != null) {
           mapData[clear[1]][clear[0]] = new Empt;
         }
+
+        testWeather.draw();
 
         if (animFrame == 0) {
           for (g in ghosts) {
