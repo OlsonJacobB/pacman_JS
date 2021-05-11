@@ -68,7 +68,13 @@
 
       class Door extends Tile {
         constructor() {
-          super('empty.png', 'door')
+          super('empty.png', 'door');
+        }
+      }
+
+      class Port extends Tile {
+        constructor() {
+          super('empty.png', 'port');
         }
       }
 
@@ -267,37 +273,37 @@
       }
 
       var mapData = [
-        [new OCNW, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new OSNW, new OSNE, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new OCNE],
-        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
-        [new  OWW, new Powe, new  IWW, new Empt, new Empt, new  IWE, new Pell, new  IWW, new Empt, new Empt, new Empt, new  IWE, new Pell, new  IWW, new  IWE, new Pell, new  IWW, new Empt, new Empt, new Empt, new  IWE, new Pell, new  IWW, new Empt, new Empt, new  IWE, new Powe, new  OWE],
-        [new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  OWE],
-        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  OWE],
-        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
-        [new OCSW, new  OWS, new  OWS, new  OWS, new  OWS, new ICNE, new Pell, new  IWW, new ACSW, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new ACSE, new  IWE, new Pell, new ICNW, new  OWS, new  OWS, new  OWS, new  OWS, new OCSE],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new ACNW, new  IWS, new  IWS, new ICSE, new Empt, new ICSW, new ICSE, new Empt, new ICSW, new  IWS, new  IWS, new ACNE, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new Door, new Door, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new ICSE, new Pell, new ICSW, new ICSE, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new ICSW, new ICSE, new Pell, new ICSW, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Pell, new Empt, new Empt, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new Empt, new Empt, new Pell, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new ICNE, new Pell, new ICNW, new ICNE, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new ICNW, new ICNE, new Pell, new ICNW, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
-        [new OCNW, new  OWN, new  OWN, new  OWN, new  OWN, new ICSE, new Pell, new ICSW, new ICSE, new Empt, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Empt, new ICSW, new ICSE, new Pell, new ICSW, new  OWN, new  OWN, new  OWN, new  OWN, new OCNE],
-        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICSW, new  IWS, new ACNE, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new ACNW, new  IWS, new ICSE, new Pell, new  OWE],
-        [new  OWW, new Powe, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Empt, new Empt, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Powe, new  OWE],
-        [new OSWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new OSEN],
-        [new OSWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new OSES],
-        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new ACSE, new ACSW, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new ACSE, new ACSW, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
-        [new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new  OWE],
-        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
-        [new OCSW, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new OCSE],
+        [new Empt, new OCNW, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new OSNW, new OSNE, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new OCNE, new Empt],
+        [new Empt, new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Powe, new  IWW, new Empt, new Empt, new  IWE, new Pell, new  IWW, new Empt, new Empt, new Empt, new  IWE, new Pell, new  IWW, new  IWE, new Pell, new  IWW, new Empt, new Empt, new Empt, new  IWE, new Pell, new  IWW, new Empt, new Empt, new  IWE, new Powe, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE, new Empt],
+        [new Empt, new OCSW, new  OWS, new  OWS, new  OWS, new  OWS, new ICNE, new Pell, new  IWW, new ACSW, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new ACSE, new  IWE, new Pell, new ICNW, new  OWS, new  OWS, new  OWS, new  OWS, new OCSE, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new ACNW, new  IWS, new  IWS, new ICSE, new Empt, new ICSW, new ICSE, new Empt, new ICSW, new  IWS, new  IWS, new ACNE, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new Door, new Door, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new ICSE, new Pell, new ICSW, new ICSE, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new ICSW, new ICSE, new Pell, new ICSW, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new Empt],
+        [new Empt, new Port, new Empt, new Empt, new Empt, new Empt, new Empt, new Pell, new Empt, new Empt, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new Empt, new Empt, new Pell, new Empt, new Empt, new Empt, new Empt, new Empt, new Port, new Empt],
+        [new Empt, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new ICNE, new Pell, new ICNW, new ICNE, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new ICNW, new ICNE, new Pell, new ICNW, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new OCNW, new  OWN, new  OWN, new  OWN, new  OWN, new ICSE, new Pell, new ICSW, new ICSE, new Empt, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Empt, new ICSW, new ICSE, new Pell, new ICSW, new  OWN, new  OWN, new  OWN, new  OWN, new OCNE, new Empt],
+        [new Empt, new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICSW, new  IWS, new ACNE, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new ACNW, new  IWS, new ICSE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Powe, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Empt, new Empt, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Powe, new  OWE, new Empt],
+        [new Empt, new OSWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new OSEN, new Empt],
+        [new Empt, new OSWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new OSES, new Empt],
+        [new Empt, new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new ACSE, new ACSW, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new ACSE, new ACSW, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new  OWE, new Empt],
+        [new Empt, new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE, new Empt],
+        [new Empt, new OCSW, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new OCSE, new Empt],
       ];
 
       class Sprite {
@@ -316,7 +322,14 @@
         }
         collision() {
           let target = [this._pos[0] + this._xControl, this._pos[1] + this._yControl];
-          if (mapData[target[1]][target[0]]._property == 'path') {
+          let prop = mapData[target[1]][target[0]]._property;
+          if (prop == 'port') {
+            if (target[0] == 1) {
+              return [27, 14];
+            } else {
+              return [2, 14];
+            }
+          } else if (prop == 'path') {
             return target;
           } else {
             return null;
@@ -326,10 +339,8 @@
           var target = this.collision();
           if (target != null) {
             this._pos = target;
-            this.draw();
-          } else {
-            this.draw();
           }
+          this.draw();
         }
         animate(animFrame) {
           let collision = this.collision();
@@ -370,7 +381,7 @@
 
       class Player extends Sprite {
         constructor() {
-          super(['playern.png', 'players.png', 'playerw.png', 'playere.png'], [14, 23]);
+          super(['playern.png', 'players.png', 'playerw.png', 'playere.png'], [15, 23]);
         }
         pickup() {
           let mapPos = mapData[this._pos[1]][this._pos[0]];
@@ -397,10 +408,10 @@
       }
 
       var player = new Player;
-      var blinky = new Ghost(['blinkyn.png', 'blinkys.png', 'blinkyw.png', 'blinkye.png'], [11, 13]);
-      var inky   = new Ghost(['inkyn.png', 'inkys.png', 'inkyw.png', 'inkye.png'], [11, 15]);
-      var pinky  = new Ghost(['pinkyn.png', 'pinkys.png', 'pinkyw.png', 'pinkye.png'], [16, 13]);
-      var clyde  = new Ghost(['clyden.png', 'clydes.png', 'clydew.png', 'clydee.png'], [16, 15]);
+      var blinky = new Ghost(['blinkyn.png', 'blinkys.png', 'blinkyw.png', 'blinkye.png'], [12, 13]);
+      var inky   = new Ghost(['inkyn.png', 'inkys.png', 'inkyw.png', 'inkye.png'], [12, 15]);
+      var pinky  = new Ghost(['pinkyn.png', 'pinkys.png', 'pinkyw.png', 'pinkye.png'], [17, 13]);
+      var clyde  = new Ghost(['clyden.png', 'clydes.png', 'clydew.png', 'clydee.png'], [17, 15]);
       var ghosts = [blinky, inky, pinky, clyde];
 
       var frames = 0;
