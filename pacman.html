@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas</title>
+
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body onload="main()">
+    <canvas class="pacman">
+      <p>Something went wrong.</p>
+    </canvas>
+
+    <script>
+      const canvas = document.querySelector('.pacman');
+      const width  = canvas.width = window.innerWidth;
+      const height = canvas.height = window.innerHeight;
+      const ctx    = canvas.getContext('2d');
+      const anchor = [(width / 2) - 336, (height / 2) - 372]
+
+      class Tile {
+        constructor(graphic, property) {
+          this._img = new Image(24, 24);
+          this._img.src = graphic;
+          this._property = property;
+        }
+        getImg() {
+          return this._img;
+        }
+        isPellet() {
+          return false;
+        }
+      }
+
+      class Path extends Tile {
+        constructor(graphic) {
+          super(graphic, 'path');
+        }
+      }
+
+      class Wall extends Tile {
+        constructor(graphic) {
+          super(graphic, 'wall');
+        }
+      }
+
+      class Door extends Tile {
+        constructor() {
+          super('empty.png', 'door')
+        }
+      }
+
+      // Path Tiles
+
+      class Empt extends Path {
+        constructor() {
+          super('empty.png');
+        }
+      }
+
+      class Pell extends Path {
+        constructor() {
+          super('pellet.png');
+        }
+        isPellet() {
+          return true;
+        }
+      }
+
+      class Powe extends Path {
+        constructor() {
+          super('power_pellet.png');
+        }
+        isPellet() {
+          return true;
+        }
+      }
+
+      // Alt Corners
+
+      class ACNE extends Wall {
+        constructor() {
+          super('acne.png');
+        }
+      }
+
+      class ACNW extends Wall {
+        constructor() {
+          super('acnw.png');
+        }
+      }
+
+      class ACSE extends Wall {
+        constructor() {
+          super('acse.png');
+        }
+      }
+
+      class ACSW extends Wall {
+        constructor() {
+          super('acsw.png');
+        }
+      }
+
+      // Inner Corners
+
+      class ICNE extends Wall {
+        constructor() {
+          super('icne.png');
+        }
+      }
+
+      class ICNW extends Wall {
+        constructor() {
+          super('icnw.png');
+        }
+      }
+
+      class ICSE extends Wall {
+        constructor() {
+          super('icse.png');
+        }
+      }
+
+      class ICSW extends Wall {
+        constructor() {
+          super('icsw.png');
+        }
+      }
+
+      // Inner Walls
+
+      class IWE extends Wall {
+        constructor() {
+          super('iwe.png');
+        }
+      }
+
+      class IWN extends Wall {
+        constructor() {
+          super('iwn.png');
+        }
+      }
+
+      class IWS extends Wall {
+        constructor() {
+          super('iws.png');
+        }
+      }
+
+      class IWW extends Wall {
+        constructor() {
+          super('iww.png');
+        }
+      }
+
+      // Outer Corners
+
+      class OCNE extends Wall {
+        constructor() {
+          super('ocne.png');
+        }
+      }
+
+      class OCNW extends Wall {
+        constructor() {
+          super('ocnw.png');
+        }
+      }
+
+      class OCSE extends Wall {
+        constructor() {
+          super('ocse.png');
+        }
+      }
+
+      class OCSW extends Wall {
+        constructor() {
+          super('ocsw.png');
+        }
+      }
+
+      // Outer Semi-corners
+
+      class OSEN extends Wall {
+        constructor() {
+          super('osen.png');
+        }
+      }
+
+      class OSES extends Wall {
+        constructor() {
+          super('oses.png');
+        }
+      }
+
+      class OSNE extends Wall {
+        constructor() {
+          super('osne.png');
+        }
+      }
+
+      class OSNW extends Wall {
+        constructor() {
+          super('osnw.png');
+        }
+      }
+
+      class OSWN extends Wall {
+        constructor() {
+          super('oswn.png');
+        }
+      }
+
+      class OSWS extends Wall {
+        constructor() {
+          super('osws.png');
+        }
+      }
+
+      // Outer Walls
+
+      class OWE extends Wall {
+        constructor() {
+          super('owe.png');
+        }
+      }
+
+      class OWN extends Wall {
+        constructor() {
+          super('own.png');
+        }
+      }
+
+      class OWS extends Wall {
+        constructor() {
+          super('ows.png');
+        }
+      }
+
+      class OWW extends Wall {
+        constructor() {
+          super('oww.png');
+        }
+      }
+
+      var mapData = [
+        [new OCNW, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new OSNW, new OSNE, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new OCNE],
+        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
+        [new  OWW, new Powe, new  IWW, new Empt, new Empt, new  IWE, new Pell, new  IWW, new Empt, new Empt, new Empt, new  IWE, new Pell, new  IWW, new  IWE, new Pell, new  IWW, new Empt, new Empt, new Empt, new  IWE, new Pell, new  IWW, new Empt, new Empt, new  IWE, new Powe, new  OWE],
+        [new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  OWE],
+        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ICSE, new Pell, new  OWE],
+        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
+        [new OCSW, new  OWS, new  OWS, new  OWS, new  OWS, new ICNE, new Pell, new  IWW, new ACSW, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new ACSE, new  IWE, new Pell, new ICNW, new  OWS, new  OWS, new  OWS, new  OWS, new OCSE],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new ACNW, new  IWS, new  IWS, new ICSE, new Empt, new ICSW, new ICSE, new Empt, new ICSW, new  IWS, new  IWS, new ACNE, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new Door, new Door, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new  OWN, new  OWN, new  OWN, new  OWN, new  OWN, new ICSE, new Pell, new ICSW, new ICSE, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new ICSW, new ICSE, new Pell, new ICSW, new  OWN, new  OWN, new  OWN, new  OWN, new  OWN],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Pell, new Empt, new Empt, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new Empt, new Empt, new Pell, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new ICNE, new Pell, new ICNW, new ICNE, new Empt, new  IWW, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWE, new Empt, new ICNW, new ICNE, new Pell, new ICNW, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new Empt, new Empt, new Empt, new Empt, new Empt, new  OWW, new Pell, new  IWW, new  IWE, new Empt, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Empt, new  IWW, new  IWE, new Pell, new  OWE, new Empt, new Empt, new Empt, new Empt, new Empt],
+        [new OCNW, new  OWN, new  OWN, new  OWN, new  OWN, new ICSE, new Pell, new ICSW, new ICSE, new Empt, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Empt, new ICSW, new ICSE, new Pell, new ICSW, new  OWN, new  OWN, new  OWN, new  OWN, new OCNE],
+        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICSW, new  IWS, new ACNE, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new ACNW, new  IWS, new ICSE, new Pell, new  OWE],
+        [new  OWW, new Powe, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Empt, new Empt, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Powe, new  OWE],
+        [new OSWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new ICNE, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new ICNW, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new OSEN],
+        [new OSWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new  IWS, new  IWS, new ACNE, new ACNW, new  IWS, new  IWS, new ICSE, new Pell, new  IWW, new  IWE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new OSES],
+        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new  IWW, new  IWE, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICNW, new  IWN, new  IWN, new  IWN, new  IWN, new ACSE, new ACSW, new  IWN, new  IWN, new ICNE, new Pell, new  IWW, new  IWE, new Pell, new ICNW, new  IWN, new  IWN, new ACSE, new ACSW, new  IWN, new  IWN, new  IWN, new  IWN, new ICNE, new Pell, new  OWE],
+        [new  OWW, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new ICSW, new ICSE, new Pell, new ICSW, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new  IWS, new ICSE, new Pell, new  OWE],
+        [new  OWW, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new Pell, new  OWE],
+        [new OCSW, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new  OWS, new OCSE],
+      ];
+
+      class Sprite {
+        constructor(graphics, starting_pos) {
+          this._img = new Image(24, 24);
+          this._graphics = graphics;
+          this._img.src = this._graphics[2];
+          this._pos = starting_pos;
+          this._xControl = 0;
+          this._yControl = 0;
+          this._xOff = 0;
+          this._yOff = 0;
+        }
+        draw() {
+          ctx.drawImage(this._img, this._pos[0] * 24 + anchor[0] + this._xOff, this._pos[1] * 24 + anchor[1] + this._yOff);
+        }
+        collision() {
+          let target = [this._pos[0] + this._xControl, this._pos[1] + this._yControl];
+          if (mapData[target[1]][target[0]]._property == 'path') {
+            return target;
+          } else {
+            return null;
+          }
+        }
+        move() {
+          var target = this.collision();
+          if (target != null) {
+            this._pos = target;
+            this.draw();
+          } else {
+            this.draw();
+          }
+        }
+        animate(animFrame) {
+          let collision = this.collision();
+
+          if (animFrame == 0) {
+            if (this._xControl == 0 && this._yControl == 0) {
+              this.draw();
+            } else if (collision != null) {
+              if (this._yControl != 0) {
+                this._xControl = 0;
+              }
+              this._xOff = 0;
+              this._yOff = 0;
+              this.move(); 
+            }
+          } else {
+            if (this._xControl != 0 && collision != null) {
+              this._xOff += this._xControl * 24 / frameGap;
+              this._yOff = 0;
+            }
+            if (this._yControl != 0 && collision != null) {
+              this._xOff = 0;
+              this._yOff += this._yControl * 24 / frameGap;
+            }
+            this.draw();
+          }
+          if (this._yControl < 0) {
+            this._img.src = this._graphics[0];
+          } else if (this._yControl > 0) {
+            this._img.src = this._graphics[1];
+          } else if (this._xControl < 0) {
+            this._img.src = this._graphics[2];
+          } else if (this._xControl > 0) {
+            this._img.src = this._graphics[3];
+          }
+        }
+      }
+
+      class Player extends Sprite {
+        constructor() {
+          super(['playern.png', 'players.png', 'playerw.png', 'playere.png'], [14, 23]);
+        }
+        pickup() {
+          let mapPos = mapData[this._pos[1]][this._pos[0]];
+          if (mapPos.isPellet()) {
+            return this._pos;
+          } else {
+            return null;
+          }
+        }
+      }
+
+      class Ghost extends Sprite {
+        constructor(graphics, starting_pos) {
+          super(graphics, starting_pos);
+        }
+        collision() {
+          let target = [this._pos[0] + this._xControl, this._pos[1] + this._yControl];
+          if (mapData[target[1]][target[0]]._property == 'path' || mapData[target[1]][target[0]]._property == 'door') {
+            return target;
+          } else {
+            return null;
+          }
+        }
+      }
+
+      var player = new Player;
+      var blinky = new Ghost(['blinkyn.png', 'blinkys.png', 'blinkyw.png', 'blinkye.png'], [11, 13]);
+      var inky   = new Ghost(['inkyn.png', 'inkys.png', 'inkyw.png', 'inkye.png'], [11, 15]);
+      var pinky  = new Ghost(['pinkyn.png', 'pinkys.png', 'pinkyw.png', 'pinkye.png'], [16, 13]);
+      var clyde  = new Ghost(['clyden.png', 'clydes.png', 'clydew.png', 'clydee.png'], [16, 15]);
+      var ghosts = [blinky, inky, pinky, clyde];
+
+      var frames = 0;
+      var frameGap = 18;
+
+      window.addEventListener('keyup', handleKeyPress);
+      window.addEventListener('keypress', handleKeyPress);
+
+      function placeLayout() {
+        for (i = 0, iLen = mapData.length; i < iLen; i++) {
+          for (j = 0, jLen = mapData[i].length; j < jLen; j++) {
+            ctx.drawImage(mapData[i][j].getImg(), j * 24 + anchor[0], i * 24 + anchor[1]);
+          }
+        }
+      }
+
+      function initGame() {
+        player.draw();
+      }
+
+      function handleKeyPress(event) {
+        var char = event.which || event.keyCode;
+        switch (char) {
+          case 97:
+            player._xControl = -1;
+            break;
+          case 100:
+            player._xControl = 1;
+            break;
+          case 119:
+            player._yControl = -1;
+            break;
+          case 115:
+            player._yControl = 1;
+            break;
+          case 65:
+            player._xControl = 0;
+            break;
+          case 68:
+            player._xControl = 0;
+            break;
+          case 87:
+            player._yControl = 0;
+            break;
+          case 83:
+            player._yControl = 0;
+            break;
+          default:
+            console.log(char);
+        }
+      }
+
+      function gameplayLoop() {
+        frames ++;
+
+        ctx.fillStyle = 'rgb(0, 0, 0)';
+        ctx.fillRect(0, 0, width, height);
+        placeLayout();
+
+        let animFrame = frames % frameGap;
+        player.animate(animFrame);
+        for (g in ghosts) {
+          ghosts[g].animate(animFrame);
+        }
+
+        let clear = player.pickup();
+        if (clear != null) {
+          mapData[clear[1]][clear[0]] = new Empt;
+        }
+
+        if (animFrame == 0) {
+          for (g in ghosts) {
+            let direction = Math.floor(Math.random() * 4); // random int 0 to 3
+            switch (direction) {
+              case 0:
+                ghosts[g]._xControl = 0;
+                ghosts[g]._yControl = -1;
+                break;
+              case 1:
+                ghosts[g]._xControl = 0;
+                ghosts[g]._yControl = 1;
+                break;
+              case 2:
+                ghosts[g]._xControl = -1;
+                ghosts[g]._yControl = 0;
+                break;
+              case 3:
+                ghosts[g]._xControl = 1;
+                ghosts[g]._yControl = 0;
+            }
+          }
+        }
+      }
+
+      function main() {
+        initGame();
+        let timer = setInterval(gameplayLoop, 10);
+      }
+    </script>
+  </body>
+</html>
